@@ -18,7 +18,7 @@ fun WatchLaterScreen(modifier: Modifier = Modifier){
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Blue)
+            .background(Color.Gray)
     ){
         Text(
             text = "Watch Later Screen",
