@@ -13,21 +13,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.moviehubproject.destinations.Destination
-import com.example.moviehubproject.screens.MovieDetailScreen
 import com.example.moviehubproject.screens.MovieScreen
 import com.example.moviehubproject.screens.SearchScreen
 import com.example.moviehubproject.screens.WatchLaterScreen
 import com.example.moviehubproject.ui.theme.MovieHubProjectTheme
-import com.example.moviehubproject.view.Navigation.BottomNavBar
+import com.example.moviehubproject.view.navigation.BottomNavBar
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

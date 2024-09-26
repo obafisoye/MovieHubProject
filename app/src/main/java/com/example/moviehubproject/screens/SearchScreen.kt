@@ -18,7 +18,7 @@ fun SearchScreen(modifier: Modifier = Modifier){
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Gray)
+            .background(Color.Black)
     ){
         Text(
             text = "Search Screen",

@@ -6,9 +6,9 @@ package com.example.moviehubproject.destinations
  */
 
 sealed class Destination(val route: String){
-    object Movie: Destination("movie")
-    object Search: Destination("search")
-    object WatchLater: Destination("watchLater")
+    object Movie: Destination("Movie")
+    object Search: Destination("Search")
+    object WatchLater: Destination("Watch Later")
     object MovieDetail: Destination("movieDetail/{movieId}"){
         fun createRoute(movieId: Int?) = "movieDetail/$movieId"
     }

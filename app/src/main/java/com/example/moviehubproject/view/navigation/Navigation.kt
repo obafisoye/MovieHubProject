@@ -1,4 +1,4 @@
-package com.example.moviehubproject.view.Navigation
+package com.example.moviehubproject.view.navigation
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
