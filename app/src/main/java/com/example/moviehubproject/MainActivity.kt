@@ -24,8 +24,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.moviehubproject.destinations.Destination
 import com.example.moviehubproject.screens.MovieDetailScreen
 import com.example.moviehubproject.screens.MovieScreen
+import com.example.moviehubproject.screens.SearchScreen
 import com.example.moviehubproject.screens.WatchLaterScreen
 import com.example.moviehubproject.ui.theme.MovieHubProjectTheme
+import com.example.moviehubproject.view.Navigation.BottomNavBar
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,19 +53,22 @@ fun App(navController: NavHostController, modifier: Modifier){
             TopAppBar(
                 title = { Text(text = "MovieHub")}
             )
-        }
-        //bottomBar = (BottomNavbar(navController = navController))
+        },
+        bottomBar = { BottomNavBar(navController = navController) }
     ){
         paddingValues ->
-            paddingValues.calculateBottomPadding()
+        paddingValues.calculateBottomPadding()
         Spacer(modifier = Modifier.padding(10.dp))
 
-        NavHost(navController = navController, startDestination = Destination.Movie.route){
+        NavHost(navController = navController as NavHostController, startDestination = Destination.Movie.route){
             composable(Destination.Movie.route){
                 MovieScreen(modifier = Modifier.padding(paddingValues))
             }
             composable(Destination.WatchLater.route){
                 WatchLaterScreen(modifier = Modifier.padding(paddingValues))
+            }
+            composable(Destination.Search.route){
+                SearchScreen(modifier = Modifier.padding(paddingValues))
             }
         }
     }
