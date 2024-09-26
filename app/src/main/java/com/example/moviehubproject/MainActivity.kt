@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.moviehubproject.api.MoviesManager
 import com.example.moviehubproject.destinations.Destination
 import com.example.moviehubproject.screens.MovieScreen
 import com.example.moviehubproject.screens.SearchScreen
@@ -33,6 +34,7 @@ class MainActivity : ComponentActivity() {
             MovieHubProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
+
                     //MovieScreen(modifier = Modifier.padding(innerPadding))
                     App(navController = navController, modifier = Modifier.padding(innerPadding))
                 }
@@ -56,7 +58,9 @@ fun App(navController: NavHostController, modifier: Modifier){
         paddingValues.calculateBottomPadding()
         Spacer(modifier = Modifier.padding(10.dp))
 
-        NavHost(navController = navController as NavHostController, startDestination = Destination.Movie.route){
+        NavHost(navController = navController as NavHostController,
+            startDestination = Destination.Movie.route){
+
             composable(Destination.Movie.route){
                 MovieScreen(modifier = Modifier.padding(paddingValues))
             }

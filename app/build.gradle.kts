@@ -51,6 +51,8 @@ android {
 
 dependencies {
 
+    implementation(libs.moshi.kotlin)
+    implementation(libs.converter.moshi)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -68,4 +70,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(kotlin("script-runtime"))
+
 }
