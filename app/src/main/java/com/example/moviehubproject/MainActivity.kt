@@ -35,8 +35,10 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
 
+                    // fetch data
+                    val moviesManager = MoviesManager()
                     //MovieScreen(modifier = Modifier.padding(innerPadding))
-                    App(navController = navController, modifier = Modifier.padding(innerPadding))
+                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager)
                 }
             }
         }
@@ -45,7 +47,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navController: NavHostController, modifier: Modifier){
+fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager){
     Scaffold(
         topBar = {
             TopAppBar(
@@ -62,7 +64,7 @@ fun App(navController: NavHostController, modifier: Modifier){
             startDestination = Destination.Movie.route){
 
             composable(Destination.Movie.route){
-                MovieScreen(modifier = Modifier.padding(paddingValues))
+                MovieScreen(modifier = Modifier.padding(paddingValues), moviesManager, navController)
             }
             composable(Destination.WatchLater.route){
                 WatchLaterScreen(modifier = Modifier.padding(paddingValues))

@@ -51,6 +51,7 @@ android {
 
 dependencies {
 
+    implementation(libs.coil.compose)
     implementation(libs.moshi.kotlin)
     implementation(libs.converter.moshi)
     implementation(libs.androidx.core.ktx)

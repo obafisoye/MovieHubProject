@@ -26,7 +26,7 @@ class MoviesManager {
     private fun getMovies(){
         val service = Api.retrofitService.getTrendingMovies(api_key)
         
-        service.enqueue(object : Callback<MovieData> {
+        service.enqueue(object : retrofit2.Callback<MovieData> {
             override fun onResponse(
                 call: Call<MovieData>,
                 response: Response<MovieData>
