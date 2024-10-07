@@ -11,10 +11,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.example.moviehubproject.api.model.Movie
+import com.example.moviehubproject.db.AppDatabase
 
 
 @Composable
-fun MovieDetailScreen(modifier: Modifier, movie: Movie){
+fun MovieDetailScreen(modifier: Modifier, movie: Movie, db: AppDatabase){
 
     Box(
         modifier = modifier

@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.moviehubproject.api.MoviesManager
 import com.example.moviehubproject.api.model.Movie
+import com.example.moviehubproject.db.AppDatabase
 import com.example.moviehubproject.destinations.Destination
 import com.example.moviehubproject.screens.MovieDetailScreen
 import com.example.moviehubproject.screens.MovieScreen
@@ -37,10 +38,14 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
 
+                    // get db instance
+                    val db = AppDatabase.getInstance(applicationContext)
+
                     // fetch data
-                    val moviesManager = MoviesManager()
+                    val moviesManager = MoviesManager(db)
+
                     //MovieScreen(modifier = Modifier.padding(innerPadding))
-                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager)
+                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager, db)
                 }
             }
         }
@@ -49,7 +54,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager){
+fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase){
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,7 +81,7 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
             }
             composable(Destination.MovieDetail.route){
                 val movie = Movie(title = "Fake Movie", overview = "This is a fake movie", poster_path = "fake.jpg")
-                MovieDetailScreen(modifier = Modifier.padding(paddingValues), movie = movie)
+                MovieDetailScreen(modifier = Modifier.padding(paddingValues), movie = movie, db = db)
             }
         }
     }

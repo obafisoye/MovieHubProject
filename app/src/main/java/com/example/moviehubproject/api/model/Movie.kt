@@ -1,16 +1,21 @@
 package com.example.moviehubproject.api.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+
+@Entity(tableName = "movies")
 @JsonClass(generateAdapter = true)
 data class Movie(
     @Json(name = "adult")
     val adult: Boolean?=null,
     @Json(name = "backdrop_path")
     val backdropPath: String?=null,
-    @Json(name = "genre_ids")
-    val genreIds: List<Int>?=null,
+//    @Json(name = "genre_ids")
+//    val genreIds: List<Int>?=null,
+    @PrimaryKey(autoGenerate = false)
     @Json(name = "id")
     val id: Int?=null,
     @Json(name = "media_type")
