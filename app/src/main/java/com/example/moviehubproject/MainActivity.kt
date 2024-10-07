@@ -19,7 +19,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.moviehubproject.api.MoviesManager
+import com.example.moviehubproject.api.model.Movie
 import com.example.moviehubproject.destinations.Destination
+import com.example.moviehubproject.screens.MovieDetailScreen
 import com.example.moviehubproject.screens.MovieScreen
 import com.example.moviehubproject.screens.SearchScreen
 import com.example.moviehubproject.screens.WatchLaterScreen
@@ -60,7 +62,7 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
         paddingValues.calculateBottomPadding()
         Spacer(modifier = Modifier.padding(10.dp))
 
-        NavHost(navController = navController as NavHostController,
+        NavHost(navController = navController,
             startDestination = Destination.Movie.route){
 
             composable(Destination.Movie.route){
@@ -71,6 +73,10 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
             }
             composable(Destination.Search.route){
                 SearchScreen(modifier = Modifier.padding(paddingValues))
+            }
+            composable(Destination.MovieDetail.route){
+                val movie = Movie(title = "Fake Movie", overview = "This is a fake movie", poster_path = "fake.jpg")
+                MovieDetailScreen(modifier = Modifier.padding(paddingValues), movie = movie)
             }
         }
     }

@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 
 
 @Composable
-fun WatchLaterScreen(modifier: Modifier = Modifier){
+fun WatchLaterScreen(modifier: Modifier){
 
     Box(
         modifier = modifier

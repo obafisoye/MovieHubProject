@@ -1,7 +1,9 @@
 package com.example.moviehubproject.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,6 +65,10 @@ fun MovieCard(
         modifier = Modifier
             .border(1.dp, Color.Red, shape = RoundedCornerShape(10.dp))
             .padding(5.dp)
+            .clickable {
+                Log.i("MovieCard", "Clicked ${movieItem.title}")
+                navController.navigate("movieDetail/${movieItem.id}")
+            }
     ) {
         Row(
             modifier = Modifier
