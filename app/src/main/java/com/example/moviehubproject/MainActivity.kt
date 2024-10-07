@@ -12,6 +12,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -28,6 +32,8 @@ import com.example.moviehubproject.screens.SearchScreen
 import com.example.moviehubproject.screens.WatchLaterScreen
 import com.example.moviehubproject.ui.theme.MovieHubProjectTheme
 import com.example.moviehubproject.view.navigation.BottomNavBar
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +61,9 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase){
+    var movie by remember{
+        mutableStateOf<Movie?>(null)
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -79,9 +88,15 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
             composable(Destination.Search.route){
                 SearchScreen(modifier = Modifier.padding(paddingValues))
             }
-            composable(Destination.MovieDetail.route){
-                val movie = Movie(title = "Fake Movie", overview = "This is a fake movie", poster_path = "fake.jpg")
-                MovieDetailScreen(modifier = Modifier.padding(paddingValues), movie = movie, db = db)
+            composable(Destination.MovieDetail.route){ navBackStackEntry ->
+                val movie_id: String? = navBackStackEntry.arguments?.getString("movieId")
+                GlobalScope.launch {
+                    if(movie_id != null){
+                        movie = db.movieDao().getMovieById(movie_id.toInt())
+                    }
+                }
+
+                movie?.let { MovieDetailScreen(modifier = Modifier.padding(paddingValues), movie = it, db = db) }
             }
         }
     }
