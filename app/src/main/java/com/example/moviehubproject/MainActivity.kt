@@ -1,5 +1,6 @@
 package com.example.moviehubproject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -58,6 +59,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase){
@@ -90,6 +92,7 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
             }
             composable(Destination.MovieDetail.route){ navBackStackEntry ->
                 val movie_id: String? = navBackStackEntry.arguments?.getString("movieId")
+
                 GlobalScope.launch {
                     if(movie_id != null){
                         movie = db.movieDao().getMovieById(movie_id.toInt())
