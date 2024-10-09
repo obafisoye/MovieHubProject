@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,6 +28,7 @@ import com.example.moviehubproject.api.MoviesManager
 import com.example.moviehubproject.api.model.Movie
 import com.example.moviehubproject.db.AppDatabase
 import com.example.moviehubproject.destinations.Destination
+import com.example.moviehubproject.mvvm.MovieViewModel
 import com.example.moviehubproject.screens.MovieDetailScreen
 import com.example.moviehubproject.screens.MovieScreen
 import com.example.moviehubproject.screens.SearchScreen
@@ -51,8 +53,11 @@ class MainActivity : ComponentActivity() {
                     // fetch data
                     val moviesManager = MoviesManager(db)
 
+                    // view model
+                    val viewModel: MovieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+
                     //MovieScreen(modifier = Modifier.padding(innerPadding))
-                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager, db)
+                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager, db, viewModel)
                 }
             }
         }
@@ -62,7 +67,7 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase){
+fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase, viewModel: MovieViewModel){
     var movie by remember{
         mutableStateOf<Movie?>(null)
     }
@@ -88,7 +93,7 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
                 WatchLaterScreen(modifier = Modifier.padding(paddingValues))
             }
             composable(Destination.Search.route){
-                SearchScreen(modifier = Modifier.padding(paddingValues))
+                SearchScreen(modifier = Modifier.padding(paddingValues), viewModel = viewModel, db = db, navController)
             }
             composable(Destination.MovieDetail.route){ navBackStackEntry ->
                 val movie_id: String? = navBackStackEntry.arguments?.getString("movieId")
