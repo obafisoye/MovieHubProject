@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
@@ -44,24 +46,24 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: MovieViewModel, db: A
     var query by rememberSaveable{ viewModel.searchTerm }
 
     Box(
-        modifier = modifier
-            .background(Color.Black)
+        modifier = Modifier
+            .background(color=Color.LightGray)
 
     ){
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ){
+            horizontalAlignment = Alignment.Start,
+        ) {
             Text(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .fillMaxWidth(),
                 text = "Search Screen",
-                style= MaterialTheme.typography.headlineMedium,
-                color = Color.White,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White, // Setting text color
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center // Centering text within the box
             )
             OutlinedTextField(
                 value = viewModel.searchTerm.value,
@@ -69,6 +71,7 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: MovieViewModel, db: A
                 label = { Text("Search for a movie") },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(onSearch = {
+                    //viewModel.searchMovies(query, database)
                     keyboardController?.hide()
                 }),
                 modifier = Modifier
@@ -76,27 +79,49 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: MovieViewModel, db: A
                     .padding(bottom = 16.dp)
                     .background(color = Color.White)
             )
-
-            Button(onClick = {
-                keyboardController?.hide()
-                viewModel.searchMovies(query, db)
-            }){
-                Text(text = "Search")
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(), // Make the Box take up the full available space
+                contentAlignment = Alignment.Center // Align content (the Row) to the center
+            ){
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ){
+                    Button(onClick = {
+                        viewModel.searchMovies(query,db)
+                        keyboardController?.hide()
+                    }) {
+                        Text("Search")
+                    }
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Button(onClick = {
+                        query = ""
+                        viewModel.searchMovies(query,db)
+                        keyboardController?.hide()
+                    }) {
+                        Text("Clear")
+                    }
+                }
             }
-            
+
+
+
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(10.dp)
             )
-            for(movie in viewModel.movies.value){
-                LazyColumn {
-                    items(viewModel.movies.value){ movie->
-                        MovieCard(movieItem = movie, navController = navController)
+            for (movie in viewModel.movies.value) {
+                LazyColumn{
+                    items(viewModel.movies.value){ movie ->
+                        MovieCard(movie, navController = navController)
                     }
                 }
             }
-        }
-    }
-}
 
+        }
+
+    }
+
+}
