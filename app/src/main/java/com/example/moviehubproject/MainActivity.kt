@@ -35,6 +35,9 @@ import com.example.moviehubproject.screens.SearchScreen
 import com.example.moviehubproject.screens.WatchLaterScreen
 import com.example.moviehubproject.ui.theme.MovieHubProjectTheme
 import com.example.moviehubproject.view.navigation.BottomNavBar
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -56,8 +59,11 @@ class MainActivity : ComponentActivity() {
                     // view model
                     val viewModel: MovieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
 
+                    // firestore db
+                    val fs_db = Firebase.firestore
+
                     //MovieScreen(modifier = Modifier.padding(innerPadding))
-                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager, db, viewModel)
+                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager, db, viewModel, fs_db)
                 }
             }
         }
@@ -67,7 +73,7 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase, viewModel: MovieViewModel){
+fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase, viewModel: MovieViewModel, fs_db: FirebaseFirestore){
     var movie by remember{
         mutableStateOf<Movie?>(null)
     }
@@ -104,7 +110,7 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
                     }
                 }
 
-                movie?.let { MovieDetailScreen(modifier = Modifier.padding(paddingValues), movie = it, db = db) }
+                movie?.let { MovieDetailScreen(modifier = Modifier.padding(paddingValues), movie = it, db = db, viewModel = viewModel, fs_db = fs_db) }
             }
         }
     }

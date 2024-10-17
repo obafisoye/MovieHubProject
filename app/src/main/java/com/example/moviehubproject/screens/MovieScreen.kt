@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -64,6 +65,7 @@ fun MovieCard(
     Column(
         modifier = Modifier
             .border(1.dp, Color.Red, shape = RoundedCornerShape(10.dp))
+            .fillMaxWidth()
             .padding(5.dp)
             .clickable {
                 Log.i("MovieCard", "Clicked ${movieItem.title}")
@@ -77,11 +79,13 @@ fun MovieCard(
                 .padding(5.dp)
         ) {
             AsyncImage(
+                modifier = Modifier.fillMaxWidth(),
                 model = ImageRequest.Builder(
                     LocalContext.current
                 ).data("https://image.tmdb.org/t/p/w500${movieItem.poster_path}")
                     .build(),
-                contentDescription = movieItem.overview
+                contentDescription = movieItem.overview,
+                contentScale = ContentScale.FillWidth
             )
         }
     }

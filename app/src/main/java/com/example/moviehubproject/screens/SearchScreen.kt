@@ -105,8 +105,6 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: MovieViewModel, db: A
                 }
             }
 
-
-
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -39,5 +39,6 @@ data class Movie(
     @Json(name = "vote_average")
     val voteAverage: Double?=null,
     @Json(name = "vote_count")
-    val voteCount: Int?=null
+    val voteCount: Int?=null,
+    var isFavorite: Boolean? =  false // attribute to keep track of favorite movies
 )

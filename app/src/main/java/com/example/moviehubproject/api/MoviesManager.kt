@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import com.example.moviehubproject.api.model.Movie
 import com.example.moviehubproject.api.model.MovieData
 import com.example.moviehubproject.db.AppDatabase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -26,6 +27,8 @@ class MoviesManager(database: AppDatabase) {
     init{
         getMovies(database)
     }
+
+    @OptIn(DelicateCoroutinesApi::class)
     private fun getMovies(database: AppDatabase){
         val service = Api.retrofitService.getTrendingMovies(api_key)
         
@@ -36,7 +39,6 @@ class MoviesManager(database: AppDatabase) {
             ){
                 if (response.isSuccessful){
                     Log.i("Data", "Data is loaded")
-
                     _moviesResponse.value = response.body()?.results?: emptyList()
                     Log.i("DataStream", _moviesResponse.value.toString())
 
