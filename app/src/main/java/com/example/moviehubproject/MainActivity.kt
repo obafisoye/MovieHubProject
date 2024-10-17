@@ -96,7 +96,7 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
                 MovieScreen(modifier = Modifier.padding(paddingValues), moviesManager, navController)
             }
             composable(Destination.WatchLater.route){
-                WatchLaterScreen(modifier = Modifier.padding(paddingValues))
+                WatchLaterScreen(modifier = Modifier.padding(paddingValues), navController)
             }
             composable(Destination.Search.route){
                 SearchScreen(modifier = Modifier.padding(paddingValues), viewModel = viewModel, db = db, navController)
