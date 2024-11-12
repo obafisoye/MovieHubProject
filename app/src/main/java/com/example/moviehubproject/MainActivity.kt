@@ -1,6 +1,7 @@
 package com.example.moviehubproject
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -48,7 +49,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieHubProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
                     val navController = rememberNavController()
+
+                    // app context
+                    val context: Context = applicationContext
 
                     // get db instance
                     val db = AppDatabase.getInstance(applicationContext)
@@ -63,7 +68,7 @@ class MainActivity : ComponentActivity() {
                     val fs_db = Firebase.firestore
 
                     //MovieScreen(modifier = Modifier.padding(innerPadding))
-                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager, db, viewModel, fs_db)
+                    App(navController = navController, modifier = Modifier.padding(innerPadding), moviesManager, db, viewModel, fs_db, context)
                 }
             }
         }
@@ -73,7 +78,7 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase, viewModel: MovieViewModel, fs_db: FirebaseFirestore){
+fun App(navController: NavHostController, modifier: Modifier, moviesManager: MoviesManager, db: AppDatabase, viewModel: MovieViewModel, fs_db: FirebaseFirestore, context: Context){
     var movie by remember{
         mutableStateOf<Movie?>(null)
     }
@@ -93,7 +98,7 @@ fun App(navController: NavHostController, modifier: Modifier, moviesManager: Mov
             startDestination = Destination.Movie.route){
 
             composable(Destination.Movie.route){
-                MovieScreen(modifier = Modifier.padding(paddingValues), moviesManager, navController)
+                MovieScreen(modifier = Modifier.padding(paddingValues), moviesManager, navController, context)
             }
             composable(Destination.WatchLater.route){
                 WatchLaterScreen(modifier = Modifier.padding(paddingValues), navController)

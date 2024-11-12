@@ -24,6 +24,7 @@ fun BottomNavBar(navController: NavController){
         NavigationBarItem(
             selected = currentDestination?.route == Destination.Movie.route,
             onClick = { navController.navigate(Destination.Movie.route){
+
                 popUpTo(Destination.Movie.route)
                 launchSingleTop = true
             } },
